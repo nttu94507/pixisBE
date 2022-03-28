@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('harddiskdrive');
             $table->string('status');
             $table->string('owner');
-            $table->string('shipid')->nullable();
-            $table->timestamp('ship_at')->nullable();
-            $table->string('Purchaseid');
+            $table->timestamp('login');
+            // $table->dateTime('lasttime');
+            // $table->string('Purchaseid');
             // $table->timestamp('Purchase_at');
             $table->timestamps();
         });
@@ -37,6 +37,7 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('probes');
         //
     }
 };
