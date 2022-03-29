@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('probes', function (Blueprint $table) {
             $table->id();
-            $table->string('probeid');
+            $table->string('probeId');
             $table->string('harddiskdrive');
             $table->string('status');
             $table->string('owner');

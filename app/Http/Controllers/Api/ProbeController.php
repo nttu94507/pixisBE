@@ -41,12 +41,17 @@ class ProbeController extends Controller
         // dd($id);
         // dd('12');
         if($id){
-            $score = probe::get()->where('id',$id);
+            $score = probe::select('probeId','owner')->find($id);
         }else{
-            $score = probe::all();
+            $score = probe::select('probeId','owner')->get();
         }
-        
-        return $score;
+        if($score) {
+            return response()->json($score);
+         } else {
+            return response()->error('error');
+         }
+        // return response($score);
+        // return $score;
 
     }
 
