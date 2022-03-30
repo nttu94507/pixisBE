@@ -15,14 +15,13 @@ return new class extends Migration
     {
         Schema::create('probes', function (Blueprint $table) {
             $table->id();
-            $table->string('probeId');
-            $table->string('harddiskdrive');
+            $table->string('probeId',20);
+            $table->string('harddiskdrive',30);
             $table->string('status');
-            $table->string('owner');
-            $table->timestamp('login');
-            // $table->dateTime('lasttime');
-            // $table->string('Purchaseid');
-            // $table->timestamp('Purchase_at');
+            $table->string('owner')->nullable();
+            $table->date('register');
+            $table->string('type');
+            $table->string('note')->nullable();
             $table->timestamps();
         });
         //

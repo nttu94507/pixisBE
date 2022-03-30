@@ -38,12 +38,10 @@ class ProbeController extends Controller
     public function show(Request $request)
     {
         $id = $request->id;
-        // dd($id);
-        // dd('12');
         if($id){
-            $score = probe::select('probeId','owner')->find($id);
+            $score = probe::select('id','probeId','owner','harddiskdrive','status','type')->find($id);
         }else{
-            $score = probe::select('probeId','owner')->get();
+            $score = probe::select('id','probeId','owner','harddiskdrive','status','type')->get();
         }
         if($score) {
             return response()->json($score);
