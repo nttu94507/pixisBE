@@ -26,6 +26,7 @@ class ProbeController extends Controller
      */
     public function store(Request $request)
     {
+        return response()->json('success');
         //
     }
 
@@ -48,9 +49,6 @@ class ProbeController extends Controller
          } else {
             return response()->error('error');
          }
-        // return response($score);
-        // return $score;
-
     }
 
     /**
