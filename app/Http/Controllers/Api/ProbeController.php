@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Probe;
+use Carbon\Carbon;
+
 
 class ProbeController extends Controller
 {
@@ -26,7 +28,19 @@ class ProbeController extends Controller
      */
     public function store(Request $request)
     {
-        return response()->json('success');
+        $currentTime = Carbon::now();
+        $data = new Probe();
+        $data->probeId=(int)$request->probeId;
+        $data->harddiskdrive=(int)$request->harddisk;
+        $data->status=0;
+        $data->register = $currentTime;
+        $data->note=$request->note;
+        $data->type=(int)$request->probetype;
+        $result = $data->save();
+
+
+        
+        return $result;
         //
     }
 
