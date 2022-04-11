@@ -85,6 +85,8 @@ class ProbeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $probe = Probe::find($id);
+        $result = $probe->delete();
+        return $result ;
     }
 }
