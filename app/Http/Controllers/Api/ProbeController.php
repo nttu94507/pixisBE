@@ -31,11 +31,11 @@ class ProbeController extends Controller
         $currentTime = Carbon::now();
         $data = new Probe();
         $data->probeId=(int)$request->probeId;
-        $data->harddiskdrive=(int)$request->harddisk;
+        $data->harddiskdrive=$request->harddisk;
         $data->status=0;
         $data->register = $currentTime;
         $data->note=$request->note;
-        $data->type=(int)$request->probetype;
+        $data->type=$request->probetype;
         $result = $data->save();
 
 
