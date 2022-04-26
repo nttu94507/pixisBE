@@ -54,15 +54,51 @@ class ProbeController extends Controller
     {
         $id = $request->id;
         if($id){
-            $score = probe::select('id','probeId','owner','harddiskdrive','status','type')->find($id);
+            $score = probe::select('id','probeId','owner','harddiskdrive','status','type')->where('id','=',$id)->get();
         }else{
             $score = probe::select('id','probeId','owner','harddiskdrive','status','type')->get();
         }
-        if($score) {
-            return response()->json($score);
-         } else {
+        $result = [];
+        foreach($score as $key=>$value){
+            $probe= [];
+            // dd($value);
+            $probe['id'] = $value->id;
+            $probe['probeId'] = $value->probeId;
+            switch($value->owner){
+                case null:
+                    $probe['owner'] = '暫無持有者';
+                    break;
+            }
+            switch($value->harddiskdrive){
+                case 0:
+                    $probe['harddiskdrive']='8GB';
+                    break;
+                case 1:
+                    $probe['harddiskdrive']='16GB';
+                    break;
+            }
+            switch($value->type){
+                case 0:
+                    $probe['type']='P110';
+                    break;
+                case 1:
+                    $probe['type']='P120';
+                case 2:
+                    $probe['type']='P220';
+
+            }
+            switch($value->status){
+                case 0:
+                    $probe['status']='在庫';
+            }
+            $result[]=$probe;
+            // dd($result);
+        }
+        if($result) {
+            return response()->json($result);
+        } else {
             return response()->error('error');
-         }
+        }
     }
 
     /**
