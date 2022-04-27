@@ -22,5 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/Probe/{id?}','App\Http\Controllers\Api\ProbeController@show');
 Route::get('/Probe/{id?}', [ProbeController::class, 'show']);
+Route::get('/Probe/info/{id?}', [ProbeController::class, 'show']);
 Route::post('/Probe', [ProbeController::class, 'store']);
 Route::delete('/Probe/{id}',[ProbeController::class, 'destroy']);
+Route::put('/Probe/{id}', [ProbeController::class, 'update']);
