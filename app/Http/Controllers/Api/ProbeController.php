@@ -30,12 +30,12 @@ class ProbeController extends Controller
     {
         $currentTime = Carbon::now();
         $data = new Probe();
-        $data->probeId=(int)$request->probeId;
-        $data->harddiskdrive=$request->Storage;
-        $data->status=0;
+        $data->probeId=$request->probeId;
+        $data->harddiskdrive=$request->harddiskdrive;
+        $data->status=1;
         $data->register = $currentTime;
         $data->note=$request->note;
-        $data->type=$request->Probetype;
+        $data->type=$request->probetype;
         $result = $data->save();
 
 
@@ -52,12 +52,13 @@ class ProbeController extends Controller
      */
     public function show(Request $request)
     {
+        // dd(123);
         $id = $request->id;
         if($id){
-            $score = probe::select('id','probeId','owner','harddiskdrive','status','type','note')->where('id','=',$id)->get();
+            $score = probe::select('id','probeId','harddiskdrive','status','register','type','note','created_at','updated_at')->where('id','=',$id)->get();
             // $score = probe::first($id);
         }else{
-            $score = probe::select('id','probeId','owner','harddiskdrive','status','type','note')->get();
+            $score = probe::select('id','probeId','harddiskdrive','status','register','type','note','created_at','updated_at')->get();
         }
         $result = [];
         foreach($score as $key=>$value){
@@ -66,11 +67,11 @@ class ProbeController extends Controller
             $probe['id'] = $value->id;
             $probe['probeId'] = $value->probeId;
             $probe['note'] = $value->note;
-            switch($value->owner){
-                case null:
-                    $probe['owner'] = '暫無持有者';
-                    break;
-            }
+            // switch($value->owner){
+            //     case null:
+            //         $probe['owner'] = '暫無持有者';
+            //         break;
+            // }
             switch($value->harddiskdrive){
                 case 0:
                     $probe['harddiskdrive']='8GB';
@@ -85,23 +86,34 @@ class ProbeController extends Controller
                     break;
                 case 1:
                     $probe['type']='P120';
+                    break;
                 case 2:
                     $probe['type']='P220';
+                    break;
+                case 3:
+                    $probe['type']='P360';
+                    break;
+                case 4:
+                    $probe['type']='P560';
+                    break;
+    
 
             }
             switch($value->status){
                 case 0:
+                    $probe['status']='出貨';
+                case 1:
+                    $probe['status']='在庫';
+                case 2:
                     $probe['status']='在庫';
             }
+            $probe['statuscode'] = $value->status;
+
+            $probe['createdate'] = $value->created_at->format('Y/m/d');
             $result[]=$probe;
             // dd($result);
         }
         if($result) {
-            // if($id){
-            //     return response()->json($result[0]);
-            // }else{
-            //     return response()->json($result);
-            // }
             return response()->json($result);
         } else {
             return response()->error('error');

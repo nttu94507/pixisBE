@@ -10,15 +10,17 @@ return new class extends Migration
      * Run the migrations.
      *
      * @return void
+     * 
+     *
      */
     public function up()
     {
         Schema::create('probes', function (Blueprint $table) {
             $table->id();
-            $table->string('probeId',20);
+            $table->integer('probeId');
             $table->integer('harddiskdrive');
             $table->integer('status');
-            $table->integer('owner')->nullable();
+            // $table->integer('owner')->nullable();
             $table->date('register');
             $table->integer('type');
             $table->string('note')->nullable();
