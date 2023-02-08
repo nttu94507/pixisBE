@@ -81,6 +81,7 @@ class ProbeController extends Controller
                     $probe['harddiskdrive']='16GB';
                     break;
             }
+            $probe['hddcode'] = $value->harddiskdrive;
             switch($value->type){
                 case 0:
                     $probe['type']='P110';
@@ -97,8 +98,6 @@ class ProbeController extends Controller
                 case 4:
                     $probe['type']='P560';
                     break;
-    
-
             }
             switch($value->status){
                 case 0:
