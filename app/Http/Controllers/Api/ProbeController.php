@@ -85,33 +85,49 @@ class ProbeController extends Controller
             switch($value->type){
                 case 0:
                     $probe['type']='P110';
+                    $probe['typecode']='0';
                     break;
                 case 1:
                     $probe['type']='P120';
+                    $probe['typecode']='1';
                     break;
                 case 2:
                     $probe['type']='P220';
+                    $probe['typecode']='2';
                     break;
                 case 3:
                     $probe['type']='P360';
+                    $probe['typecode']='3';
                     break;
                 case 4:
                     $probe['type']='P560';
+                    $probe['typecode']='4';
+                    break;
+                case 5:
+                    $probe['type']='P110+';
+                    $probe['typecode']='5';
                     break;
             }
+            // dd($value->status);
             switch($value->status){
                 case 0:
                     $probe['status']='出貨';
+                    break;
                 case 1:
                     $probe['status']='在庫';
+                    break;
                 case 2:
                     $probe['status']='預留';
+                    break;
                 case 3:
                     $probe['status']='外借';
+                    break;
                 case 4:
                     $probe['status']='故障';
+                    break;
                 case 5:
                     $probe['status']='內借';
+                    break;
             }
             $probe['statuscode'] = $value->status;
 
@@ -119,6 +135,7 @@ class ProbeController extends Controller
             $result[]=$probe;
             // dd($result);
         }
+        // dd($result);
         if($result) {
             return response()->json($result);
         } else {
@@ -185,7 +202,7 @@ class ProbeController extends Controller
             // dd($value->id);
             $probe['id'] = $value->id;
             $probe['probeId'] = $value->probeId;
-            $probe['note'] = $value->note;
+            $probe['note'] = $value->note?$value->note:' ';
             // switch($value->owner){
             //     case null:
             //         $probe['owner'] = '暫無持有者';
@@ -218,6 +235,7 @@ class ProbeController extends Controller
     
 
             }
+            // dd($value->status);
             switch($value->status){
                 case 0:
                     $probe['status']='出貨';
