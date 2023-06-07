@@ -10,26 +10,26 @@ return new class extends Migration
      * Run the migrations.
      *
      * @return void
-     * 
-     *
      */
     public function up()
     {
-        Schema::create('probes', function (Blueprint $table) {
+        //
+        Schema::create('customer', function (Blueprint $table) {
             $table->id();
-            $table->integer('probeId');
-            $table->integer('harddiskdrive');
+            $table->integer('VATnumber');
+            $table->string('companyName');
+            $table->string('companyAddress');
+            $table->string('contactPerson');
+            $table->string('contactPersonEmail');
+            $table->string('contactPersonPhoneNumber');
             $table->integer('status');
-            $table->integer('ownerID');
-            $table->dateTime('register');
-            $table->dateTime('lastupdate');
-            $table->integer('type');
-            $table->integer('price');
-            $table->integer('cost');
+            $table->integer('FAEID');
+            $table->integer('SalesID');
             $table->string('note');
+            $table->dateTime('register_at');
+            $table->dateTime('transfer_at');
             $table->timestamps();
         });
-        //
     }
 
     /**
@@ -39,7 +39,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('probes');
         //
     }
 };

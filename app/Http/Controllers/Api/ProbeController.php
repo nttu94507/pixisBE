@@ -120,7 +120,7 @@ class ProbeController extends Controller
                     $probe['status']='預留';
                     break;
                 case 3:
-                    $probe['status']='外借';
+                    $probe['status']='借測';
                     break;
                 case 4:
                     $probe['status']='故障';
@@ -247,7 +247,7 @@ class ProbeController extends Controller
                     $probe['status']='預留';
                     break;
                 case 3:
-                    $probe['status']='外借';
+                    $probe['status']='借測';
                     break;
                 case 4:
                     $probe['status']='故障';
