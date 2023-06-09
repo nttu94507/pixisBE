@@ -21,8 +21,8 @@ use Illuminate\Support\Facades\Route;
 // });
 
 // Route::get('/Probe','App\Http\Controllers\Api\ProbeController@show');
-Route::get('/Probe/{id?}', [ProbeController::class, 'show']);
+Route::get('/Probe', [ProbeController::class, 'show']);
 Route::post('/Probe', [ProbeController::class, 'store']);
-Route::get('/Probe/search/{key}',[ProbeController::class, 'search']);
+Route::get('/Probe/detail/{id}',[ProbeController::class, 'show']);
 // Route::put('/Probe/{id}', [ProbeController::class, 'update']);
 Route::get('/Probe/{id}', [ProbeController::class, 'readinfo']);

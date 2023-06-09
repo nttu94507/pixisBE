@@ -191,15 +191,15 @@ class ProbeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function readinfo($id)
+    public function getProbeInfo($id)
     {
         
         if($id){
-            $value = probe::select('id','probeId','harddiskdrive','status','register','type','note','created_at','updated_at')->where('id','=',$id)->first();
+            $value = probe::select('id','probeId','harddiskdrive','status','register','type','note','created_at','updated_at')->where('id','=',$id)->get();
         }
         if($value) {
             $probe= [];
-            // dd($value->id);
+            dd($value);
             $probe['id'] = $value->id;
             $probe['probeId'] = $value->probeId;
             $probe['note'] = $value->note?$value->note:' ';
@@ -235,7 +235,6 @@ class ProbeController extends Controller
     
 
             }
-            // dd($value->status);
             switch($value->status){
                 case 0:
                     $probe['status']='出貨';
@@ -259,8 +258,7 @@ class ProbeController extends Controller
             $probe['statuscode'] = $value->status;
 
             $probe['createdate'] = $value->created_at->format('Y/m/d');
-            $result[]=$probe;
-            // dd($result);
+            
             return response()->json($probe);
         } else {
             return response()->error('error');
