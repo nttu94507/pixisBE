@@ -20,13 +20,13 @@ return new class extends Migration
             $table->integer('probeId');
             $table->integer('harddiskdrive');
             $table->integer('status');
-            $table->integer('ownerID');
+            $table->integer('ownerID')->default(0);
             $table->dateTime('register');
-            $table->dateTime('lastupdate');
+            $table->dateTime('manufacture')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->integer('type');
-            $table->integer('price');
-            $table->integer('cost');
-            $table->string('note');
+            $table->integer('price')->default(0);
+            $table->integer('cost')->default(0);
+            $table->string('note')->default('');
             $table->timestamps();
         });
         //
