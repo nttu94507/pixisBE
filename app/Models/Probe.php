@@ -8,5 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Probe extends Model
 {
     protected $table = 'Probes';
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'manufacture',
+        'register',
+    ];
     // use HasFactory;
 }

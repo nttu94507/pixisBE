@@ -28,20 +28,21 @@ class ProbeController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $currentTime = Carbon::now();
         $data = new Probe();
-        $data->probeId=$request->probeId;
-        $data->harddiskdrive=$request->harddiskdrive;
-        $data->status=1;
-        // $data->ownerID=$request->ownerID;
+        $data->probeId = $request->probeId;
+        $data->harddiskdrive = $request->harddiskdrive;
+        $data->status = 1;
+        $data->price=$request->price;
         $data->register = $currentTime;
-        // $data->manufacture = $request;
-        $data->note=$request->note;
-        $data->type=$request->probetype;
+        $data->manufacture = $request->manufacture;
+        $data->note = $request->note;
+        $data->type = $request->probetype;
         $result = $data->save();
 
 
-        
+
         return $result;
         //
     }
@@ -57,94 +58,94 @@ class ProbeController extends Controller
         // dd(123);
         $id = $request->id;
         // dd($id);
-        if($id){
-            $score = probe::select('*')->where('id','=',$id)->get();
+        if ($id) {
+            $score = probe::select('*')->where('id', '=', $id)->get();
             // $score = probe::first($id);
-        }else{
+        } else {
             $score = probe::select('*')->get();
         }
         $result = [];
-        if($score){
-            foreach($score as $key=>$value){
-                $probe= [];
+        // dd($score);
+        if ($score) {
+            foreach ($score as $key => $value) {
+                $probe = [];
                 // dd($value);
                 $probe['id'] = $value->id;
                 $probe['probeId'] = $value->probeId;
                 $probe['note'] = $value->note;
-                // switch($value->owner){
-                //     case null:
-                //         $probe['owner'] = '暫無持有者';
-                //         break;
-                // }
-                switch($value->harddiskdrive){
+                if ($value->owner == 0) {
+                    $probe['ownerName'] = '無';
+                } else {
+                    $probe['ownerName'] = $value->ownerName;
+                }
+                switch ($value->harddiskdrive) {
                     case 0:
-                        $probe['harddiskdrive']='8GB';
+                        $probe['harddiskdrive'] = '8GB';
                         break;
                     case 1:
-                        $probe['harddiskdrive']='16GB';
+                        $probe['harddiskdrive'] = '16GB';
                         break;
                 }
                 $probe['hddcode'] = $value->harddiskdrive;
-                switch($value->type){
+                switch ($value->type) {
                     case 0:
-                        $probe['type']='P110';
-                        $probe['typecode']='0';
+                        $probe['type'] = 'P110';
+                        $probe['typecode'] = '0';
                         break;
                     case 1:
-                        $probe['type']='P120';
-                        $probe['typecode']='1';
+                        $probe['type'] = 'P120';
+                        $probe['typecode'] = '1';
                         break;
                     case 2:
-                        $probe['type']='P220';
-                        $probe['typecode']='2';
+                        $probe['type'] = 'P220';
+                        $probe['typecode'] = '2';
                         break;
                     case 3:
-                        $probe['type']='P360';
-                        $probe['typecode']='3';
+                        $probe['type'] = 'P360';
+                        $probe['typecode'] = '3';
                         break;
                     case 4:
-                        $probe['type']='P560';
-                        $probe['typecode']='4';
+                        $probe['type'] = 'P560';
+                        $probe['typecode'] = '4';
                         break;
                     case 5:
-                        $probe['type']='P110+';
-                        $probe['typecode']='5';
+                        $probe['type'] = 'P110+';
+                        $probe['typecode'] = '5';
                         break;
                 }
-                // dd($value->status);
-                switch($value->status){
+                switch ($value->status) {
                     case 0:
-                        $probe['status']='出貨';
+                        $probe['status'] = '出貨';
                         break;
                     case 1:
-                        $probe['status']='庫存';
+                        $probe['status'] = '庫存';
                         break;
                     case 2:
-                        $probe['status']='預留';
+                        $probe['status'] = '預留';
                         break;
                     case 3:
-                        $probe['status']='借測';
+                        $probe['status'] = '借測';
                         break;
                     case 4:
-                        $probe['status']='故障';
+                        $probe['status'] = '故障';
                         break;
                     case 5:
-                        $probe['status']='內借';
+                        $probe['status'] = '內借';
                         break;
                 }
                 $probe['statuscode'] = $value->status;
-    
+                $probe['price'] = $value->price;
+                $probe['manufacture'] = $value->manufacture->format('Y/m/d');
                 $probe['createdate'] = $value->created_at->format('Y/m/d');
-                $result[]=$probe;
-                // dd($result);
+                $probe['lastupdate'] = $value->updated_at->format('Y/m/d H:i:s');
+                $result[] = $probe;
             }
-            // dd($result);
-            if($result) {
+            if ($result) {
                 return response()->json($result);
             } else {
                 return response()->json([]);
             }
-        }else{
+        } else {
             return response()->json([]);
         }
     }
@@ -159,10 +160,10 @@ class ProbeController extends Controller
     {
         $probe = Probe::find($id);
         $result = $probe->delete();
-        return $result ;
+        return $result;
     }
 
-     /**
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -171,72 +172,72 @@ class ProbeController extends Controller
      */
     public function getProbeInfo($id)
     {
-        
-        if($id){
-            $value = probe::select('id','probeId','harddiskdrive','status','register','type','note','created_at','updated_at')->where('id','=',$id)->get();
+
+        if ($id) {
+            $value = probe::select('id', 'probeId', 'harddiskdrive', 'status', 'register', 'type', 'note', 'created_at', 'updated_at')->where('id', '=', $id)->get();
         }
-        if($value) {
-            $probe= [];
+        if ($value) {
+            $probe = [];
             dd($value);
             $probe['id'] = $value->id;
             $probe['probeId'] = $value->probeId;
-            $probe['note'] = $value->note?$value->note:' ';
+            $probe['note'] = $value->note ? $value->note : ' ';
             // switch($value->owner){
             //     case null:
             //         $probe['owner'] = '暫無持有者';
             //         break;
             // }
-            switch($value->harddiskdrive){
+            switch ($value->harddiskdrive) {
                 case 0:
-                    $probe['harddiskdrive']='8GB';
+                    $probe['harddiskdrive'] = '8GB';
                     break;
                 case 1:
-                    $probe['harddiskdrive']='16GB';
+                    $probe['harddiskdrive'] = '16GB';
                     break;
             }
-            switch($value->type){
+            switch ($value->type) {
                 case 0:
-                    $probe['type']='P110';
+                    $probe['type'] = 'P110';
                     break;
                 case 1:
-                    $probe['type']='P120';
+                    $probe['type'] = 'P120';
                     break;
                 case 2:
-                    $probe['type']='P220';
+                    $probe['type'] = 'P220';
                     break;
                 case 3:
-                    $probe['type']='P360';
+                    $probe['type'] = 'P360';
                     break;
                 case 4:
-                    $probe['type']='P560';
+                    $probe['type'] = 'P560';
                     break;
-    
+
 
             }
-            switch($value->status){
+            switch ($value->status) {
                 case 0:
-                    $probe['status']='出貨';
+                    $probe['status'] = '出貨';
                     break;
                 case 1:
-                    $probe['status']='在庫';
+                    $probe['status'] = '在庫';
                     break;
                 case 2:
-                    $probe['status']='預留';
+                    $probe['status'] = '預留';
                     break;
                 case 3:
-                    $probe['status']='借測';
+                    $probe['status'] = '借測';
                     break;
                 case 4:
-                    $probe['status']='故障';
+                    $probe['status'] = '故障';
                     break;
                 case 5:
-                    $probe['status']='內借';
+                    $probe['status'] = '內借';
                     break;
             }
             $probe['statuscode'] = $value->status;
 
             $probe['createdate'] = $value->created_at->format('Y/m/d');
-            
+
             return response()->json($probe);
         } else {
             return response()->error('error');

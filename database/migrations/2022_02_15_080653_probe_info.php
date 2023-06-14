@@ -17,16 +17,16 @@ return new class extends Migration
     {
         Schema::create('probes', function (Blueprint $table) {
             $table->id();
-            $table->integer('probeId');
+            $table->string('probeId');
             $table->integer('harddiskdrive');
             $table->integer('status');
             $table->integer('ownerID')->default(0);
-            $table->dateTime('register');
-            $table->dateTime('manufacture')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('register')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('manufacture')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->integer('type');
-            $table->integer('price')->default(0);
+            $table->string('price')->default('0');
             $table->integer('cost')->default(0);
-            $table->string('note')->default('');
+            $table->longText('note')->default('');
             $table->timestamps();
         });
         //
