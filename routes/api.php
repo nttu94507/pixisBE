@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ProbeController;
+use App\Http\Controllers\Api\CustomerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,4 +26,8 @@ Route::get('/Probe', [ProbeController::class, 'show']);
 Route::post('/Probe', [ProbeController::class, 'store']);
 Route::get('/Probe/detail/{id}',[ProbeController::class, 'show']);
 Route::post('/Probe/update', [ProbeController::class, 'updateprobe']);
-// Route::get('/Probe/{id}', [ProbeController::class, 'readinfo']);
+
+
+//** customer **//
+// Route::get('/customer', [CustomerController::class, 'index']);
+Route::post('/customer', [CustomerController::class, 'store']);

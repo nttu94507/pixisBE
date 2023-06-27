@@ -17,17 +17,17 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->integer('GUInumber');//A.K.A 統編
-            $table->string('companyName');
-            $table->string('companyAddress');
+            $table->string('Organization_Name');
+            $table->string('Organization_Address');
             $table->string('contactPerson');
-            $table->string('contactPersonEmail');
-            $table->string('contactPersonPhoneNumber');
+            $table->string('contactPerson_Email');
+            $table->string('contactPerson_PhoneNumber');
             $table->integer('status');
             $table->integer('FAEID');
             $table->integer('SalesID');
             $table->string('note');
             $table->dateTime('register_at');
-            $table->dateTime('transfer_at');
+            $table->dateTime('transfer_at')->default(DB::raw('CURRENT_TIMESTAMP'));;
             $table->timestamps();
         });
     }
