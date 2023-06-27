@@ -24,5 +24,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/Probe', [ProbeController::class, 'show']);
 Route::post('/Probe', [ProbeController::class, 'store']);
 Route::get('/Probe/detail/{id}',[ProbeController::class, 'show']);
-// Route::put('/Probe/{id}', [ProbeController::class, 'update']);
-Route::get('/Probe/{id}', [ProbeController::class, 'readinfo']);
+Route::post('/Probe/update', [ProbeController::class, 'updateprobe']);
+// Route::get('/Probe/{id}', [ProbeController::class, 'readinfo']);

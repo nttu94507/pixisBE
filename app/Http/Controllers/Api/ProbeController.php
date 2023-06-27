@@ -170,78 +170,19 @@ class ProbeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getProbeInfo($id)
+    public function updateprobe(Request $request)
     {
 
-        if ($id) {
-            $value = probe::select('id', 'probeId', 'harddiskdrive', 'status', 'register', 'type', 'note', 'created_at', 'updated_at')->where('id', '=', $id)->get();
+        if ($request->id) {
+
+            $currentTime = Carbon::now();
+            $probe = probe::find($request->id);
+            $probe->note = $request->note;
+            $probe->harddiskdrive = $request->harddiskdrive;
+            $result = $probe->update();
+            return $result;
+
         }
-        if ($value) {
-            $probe = [];
-            dd($value);
-            $probe['id'] = $value->id;
-            $probe['probeId'] = $value->probeId;
-            $probe['note'] = $value->note ? $value->note : ' ';
-            // switch($value->owner){
-            //     case null:
-            //         $probe['owner'] = '暫無持有者';
-            //         break;
-            // }
-            switch ($value->harddiskdrive) {
-                case 0:
-                    $probe['harddiskdrive'] = '8GB';
-                    break;
-                case 1:
-                    $probe['harddiskdrive'] = '16GB';
-                    break;
-            }
-            switch ($value->type) {
-                case 0:
-                    $probe['type'] = 'P110';
-                    break;
-                case 1:
-                    $probe['type'] = 'P120';
-                    break;
-                case 2:
-                    $probe['type'] = 'P220';
-                    break;
-                case 3:
-                    $probe['type'] = 'P360';
-                    break;
-                case 4:
-                    $probe['type'] = 'P560';
-                    break;
-
-
-            }
-            switch ($value->status) {
-                case 0:
-                    $probe['status'] = '出貨';
-                    break;
-                case 1:
-                    $probe['status'] = '在庫';
-                    break;
-                case 2:
-                    $probe['status'] = '預留';
-                    break;
-                case 3:
-                    $probe['status'] = '借測';
-                    break;
-                case 4:
-                    $probe['status'] = '故障';
-                    break;
-                case 5:
-                    $probe['status'] = '內借';
-                    break;
-            }
-            $probe['statuscode'] = $value->status;
-
-            $probe['createdate'] = $value->created_at->format('Y/m/d');
-
-            return response()->json($probe);
-        } else {
-            return response()->error('error');
-        }
-        //
+        
     }
 }

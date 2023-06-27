@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Probe extends Model
 {
-    protected $table = 'Probes';
+    protected $table = 'probes';
     protected $dates = [
         'created_at',
         'updated_at',

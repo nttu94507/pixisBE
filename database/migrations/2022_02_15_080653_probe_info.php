@@ -26,7 +26,7 @@ return new class extends Migration
             $table->integer('type');
             $table->string('price')->default('0');
             $table->integer('cost')->default(0);
-            $table->longText('note')->default('');
+            $table->longText('note');
             $table->timestamps();
         });
         //
