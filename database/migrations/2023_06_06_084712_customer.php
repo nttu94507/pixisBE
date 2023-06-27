@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         //
-        Schema::create('customer', function (Blueprint $table) {
+        Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->integer('VATnumber');
+            $table->integer('GUInumber');//A.K.A 統編
             $table->string('companyName');
             $table->string('companyAddress');
             $table->string('contactPerson');
@@ -40,5 +40,6 @@ return new class extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('customers');
     }
 };
