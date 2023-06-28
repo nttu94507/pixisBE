@@ -29,5 +29,5 @@ Route::post('/Probe/update', [ProbeController::class, 'updateprobe']);
 
 
 //** customer **//
-// Route::get('/customer', [CustomerController::class, 'index']);
+Route::get('/customer/{id?}', [CustomerController::class, 'index']);
 Route::post('/customer', [CustomerController::class, 'store']);
