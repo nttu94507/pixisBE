@@ -14,5 +14,6 @@ class Probe extends Model
         'manufacture',
         'register',
     ];
+    protected $fillable = ['probeId'];
     // use HasFactory;
 }
