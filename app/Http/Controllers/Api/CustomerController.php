@@ -19,26 +19,32 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request);
         $currentTime = Carbon::now();
-        $data = new Customer();
-        $data->GUInumber = $request->GUInumber;
-        $data->Organization_Name = $request->Organization_Name;
-        $data->Organization_Address = $request->Organization_Address;
-        $data->contactPerson = $request->contractPerson;
-        $data->contactPerson_Email = $request->contractPerson_Email;
-        $data->contactPerson_PhoneNumber = $request->contractPerson_Phonenumber;
-        $data->status = 0;
-        $data->FAEID = $request->FAEID;
-        $data->SalesID = $request->SalesID;
-        $data->note = $request->note;
-        $data->register_at = $currentTime;
-        //  $data->transfer_at = $request->probetype;
-        $result = $data->save();
+        $data = Customer::firstOrnew(['GUInumber' => $request->GUInumber]);
+        // dd($data);
+        if ($data->exists) {
+            // dd($data->exists);
+            return 0;
+        } else {
+            // "firstOrCreate" found the user in the DB and fetched it.
+            // dd($data->exists);
+            $data->GUInumber = $request->GUInumber;
+            $data->Organization_Name = $request->Organization_Name;
+            $data->Organization_Address = $request->Organization_Address;
+            $data->contractPerson = $request->contractPerson;
+            $data->contractPerson_Email = $request->contractPerson_Email;
+            $data->contractPerson_PhoneNumber = $request->contractPerson_Phonenumber;
+            $data->status = 0;
+            $data->FAEID = $request->FAEID;
+            $data->SalesID = $request->SalesID;
+            $data->note = $request->note?$request->note:'';
+            $data->order_at = $request->order_at;
+            $data->Maintenance_Agreement_at = $request->Maintenance_Agreement_at;
+            //  $data->transfer_at = $request->probetype;
+            $result = $data->save();
+            return $result;
+        }
 
-
-
-        return $result;
         //
     }
     //

@@ -19,15 +19,16 @@ return new class extends Migration
             $table->integer('GUInumber');//A.K.A 統編
             $table->string('Organization_Name');
             $table->string('Organization_Address');
-            $table->string('contactPerson');
-            $table->string('contactPerson_Email');
-            $table->string('contactPerson_PhoneNumber');
-            $table->integer('status');
+            $table->string('contractPerson');
+            $table->string('contractPerson_Email');
+            $table->string('contractPerson_PhoneNumber');
+            $table->integer('status');//0:保固 1:過保 2:處理中
             $table->integer('FAEID');
             $table->integer('SalesID');
-            $table->string('note');
-            $table->dateTime('register_at');
-            $table->dateTime('transfer_at')->default(DB::raw('CURRENT_TIMESTAMP'));;
+            $table->longText('note');
+            $table->dateTime('order_at');//下單時間
+            $table->dateTime('Maintenance_Agreement_at');//保固到期日
+            // $table->dateTime('transfer_at')->default(DB::raw('CURRENT_TIMESTAMP'));;
             $table->timestamps();
         });
     }

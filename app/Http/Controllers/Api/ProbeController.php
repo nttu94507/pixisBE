@@ -29,19 +29,22 @@ class ProbeController extends Controller
     public function store(Request $request)
     {
         // dd($request);
-        $currentTime = Carbon::now();
+        $d = Probe::firstOrnew(['probeId' => $request->probeId]);
+        if ($d->exists){
+            return 0;
+        }else{
+            $currentTime = Carbon::now();
         $data = new Probe();
         $data->probeId = $request->probeId;
         $data->harddiskdrive = $request->harddiskdrive;
         $data->status = 1;
         $data->price=$request->price;
         $data->register = $currentTime;
-        $data->manufacture = $request->manufacture;
-        $data->note = $request->note;
-        $data->type = $request->probetype;
+        $data->manufacture = $currentTime;
+        $data->note = $request->note?$request->note:'';
+        $data->type = $request->type;
         $result = $data->save();
-
-
+        }
 
         return $result;
         //
@@ -177,8 +180,11 @@ class ProbeController extends Controller
 
             $currentTime = Carbon::now();
             $probe = probe::find($request->id);
+            $probe->probeId =  $request->probeId;
+            $probe->type =  $request->typecode;
             $probe->note = $request->note;
             $probe->harddiskdrive = $request->harddiskdrive;
+            $probe->price = $request->price;
             $result = $probe->update();
             return $result;
 
