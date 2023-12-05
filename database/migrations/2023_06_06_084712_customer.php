@@ -28,7 +28,6 @@ return new class extends Migration
             $table->longText('note');
             $table->dateTime('order_at');//下單時間
             $table->dateTime('Maintenance_Agreement_at');//保固到期日
-            // $table->dateTime('transfer_at')->default(DB::raw('CURRENT_TIMESTAMP'));;
             $table->timestamps();
         });
     }

@@ -26,6 +26,8 @@ Route::get('/Probe', [ProbeController::class, 'show']);
 Route::post('/Probe', [ProbeController::class, 'store']);
 Route::get('/Probe/detail/{id}',[ProbeController::class, 'show']);
 Route::post('/Probe/update', [ProbeController::class, 'updateprobe']);
+Route::post('/Probe/invisible', [ProbeController::class, 'destroy']);
+
 
 
 //** customer **//
