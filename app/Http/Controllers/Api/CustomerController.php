@@ -33,13 +33,13 @@ class CustomerController extends Controller
             $data->Organization_Address = $request->Organization_Address;
             $data->contractPerson = $request->contractPerson;
             $data->contractPerson_Email = $request->contractPerson_Email;
-            $data->contractPerson_PhoneNumber = $request->contractPerson_Phonenumber;
+            $data->contractPerson_PhoneNumber = $request->contractPerson_PhoneNumber;
             $data->status = 0;
             $data->FAEID = $request->FAEID;
             $data->SalesID = $request->SalesID;
             $data->note = $request->note?$request->note:'';
-            $data->order_at = $request->order_at;
-            $data->Maintenance_Agreement_at = $request->Maintenance_Agreement_at;
+            $data->order_at = $request->order_at?$request->order_at:'';
+            $data->Maintenance_Agreement_at = $request->Maintenance_Agreement_at?$request->Maintenance_Agreement_at:'';
             //  $data->transfer_at = $request->probetype;
             $result = $data->save();
             return $result;

@@ -93,27 +93,27 @@ class ProbeController extends Controller
                 switch ($value->type) {
                     case 0:
                         $probe['type'] = 'P110';
-                        $probe['typecode'] = '0';
+                        $probe['typecode'] = 0;
                         break;
                     case 1:
                         $probe['type'] = 'P120';
-                        $probe['typecode'] = '1';
+                        $probe['typecode'] = 1;
                         break;
                     case 2:
                         $probe['type'] = 'P220';
-                        $probe['typecode'] = '2';
+                        $probe['typecode'] = 2;
                         break;
                     case 3:
                         $probe['type'] = 'P360';
-                        $probe['typecode'] = '3';
+                        $probe['typecode'] = 3;
                         break;
                     case 4:
                         $probe['type'] = 'P560';
-                        $probe['typecode'] = '4';
+                        $probe['typecode'] = 4;
                         break;
                     case 5:
                         $probe['type'] = 'P110+';
-                        $probe['typecode'] = '5';
+                        $probe['typecode'] = 5;
                         break;
                 }
                 switch ($value->status) {
@@ -181,8 +181,8 @@ class ProbeController extends Controller
             $currentTime = Carbon::now();
             $probe = probe::find($request->id);
             $probe->probeId =  $request->probeId;
-            $probe->type =  $request->typecode;
-            $probe->note = $request->note;
+            $probe->type =  $request->type;
+            $probe->note = $request->note?$request->note:'';
             $probe->harddiskdrive = $request->harddiskdrive;
             $probe->price = $request->price;
             $result = $probe->update();
