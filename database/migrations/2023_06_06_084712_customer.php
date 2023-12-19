@@ -26,8 +26,8 @@ return new class extends Migration
             $table->integer('FAEID');
             $table->integer('SalesID');
             $table->longText('note');
-            $table->dateTime('order_at');//下單時間
-            $table->dateTime('Maintenance_Agreement_at');//保固到期日
+            $table->dateTime('order_at')->nullable();//成交時間
+            $table->dateTime('Maintenance_Agreement_at')->nullable();//保固到期日
             $table->timestamps();
         });
     }

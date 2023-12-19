@@ -31,5 +31,6 @@ Route::post('/Probe/invisible', [ProbeController::class, 'destroy']);
 
 
 //** customer **//
-Route::get('/customer/{id?}', [CustomerController::class, 'index']);
+Route::get('/customers/{id?}', [CustomerController::class, 'index']);
 Route::post('/customer', [CustomerController::class, 'store']);
+Route::get('/customers/detail/{id}', [CustomerController::class, 'detail']);

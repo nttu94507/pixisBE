@@ -75,7 +75,7 @@ class ProbeController extends Controller
                 // dd($value);
                 $probe['id'] = $value->id;
                 $probe['probeId'] = $value->probeId;
-                $probe['note'] = $value->note;
+                $probe['note'] = $value->note?$value->note:'';
                 if ($value->owner == 0) {
                     $probe['ownerName'] = '無';
                 } else {
@@ -137,7 +137,7 @@ class ProbeController extends Controller
                         break;
                 }
                 $probe['statuscode'] = $value->status;
-                $probe['price'] = $value->price;
+                $probe['price'] = $value->price != ''?$value->price:'';
                 $probe['manufacture'] = $value->manufacture->format('Y/m/d');
                 $probe['createdate'] = $value->created_at->format('Y/m/d');
                 $probe['lastupdate'] = $value->updated_at->format('Y/m/d H:i:s');
