@@ -36,72 +36,8 @@ class CustomerController extends Controller
                 $customer['FAEID'] = $value->FAEID;
                 $customer['note'] = $value->note;
                 $customer['SalesID'] = $value->SalesID;
-                $customer['Maintenance_Agreement_at'] = $value->Maintenance_Agreement_at?$value->Maintenance_Agreement_at:'尚未成交';
-                // if ($value->owner == 0) {
-                //     $probe['ownerName'] = '無';
-                // } else {
-                //     $probe['ownerName'] = $value->ownerName;
-                // }
-                // switch ($value->harddiskdrive) {
-                //     case 0:
-                //         $probe['harddiskdrive'] = '8GB';
-                //         break;
-                //     case 1:
-                //         $probe['harddiskdrive'] = '16GB';
-                //         break;
-                // }
-                // $probe['hddcode'] = $value->harddiskdrive;
-                // switch ($value->type) {
-                //     case 0:
-                //         $probe['type'] = 'P110';
-                //         $probe['typecode'] = 0;
-                //         break;
-                //     case 1:
-                //         $probe['type'] = 'P120';
-                //         $probe['typecode'] = 1;
-                //         break;
-                //     case 2:
-                //         $probe['type'] = 'P220';
-                //         $probe['typecode'] = 2;
-                //         break;
-                //     case 3:
-                //         $probe['type'] = 'P360';
-                //         $probe['typecode'] = 3;
-                //         break;
-                //     case 4:
-                //         $probe['type'] = 'P560';
-                //         $probe['typecode'] = 4;
-                //         break;
-                //     case 5:
-                //         $probe['type'] = 'P110+';
-                //         $probe['typecode'] = 5;
-                //         break;
-                // }
-                // switch ($value->status) {
-                //     case 0:
-                //         $probe['status'] = '出貨';
-                //         break;
-                //     case 1:
-                //         $probe['status'] = '庫存';
-                //         break;
-                //     case 2:
-                //         $probe['status'] = '預留';
-                //         break;
-                //     case 3:
-                //         $probe['status'] = '借測';
-                //         break;
-                //     case 4:
-                //         $probe['status'] = '故障';
-                //         break;
-                //     case 5:
-                //         $probe['status'] = '內借';
-                //         break;
-                // }
-                // $probe['statuscode'] = $value->status;
-                // $probe['price'] = $value->price != ''?$value->price:'';
-                // $probe['manufacture'] = $value->manufacture->format('Y/m/d');
-                // $probe['createdate'] = $value->created_at->format('Y/m/d');
-                // $probe['lastupdate'] = $value->updated_at->format('Y/m/d H:i:s');
+                $customer['Maintenance_Agreement_at'] = $value->Maintenance_Agreement_at ? $value->Maintenance_Agreement_at : '尚未成交';
+
                 $result[] = $customer;
             }
             // dd($result);
@@ -113,12 +49,6 @@ class CustomerController extends Controller
         } else {
             return response()->json([]);
         }
-    
-
-       
-        // $score = Customer::select('*')->get();
-        // return response()->json($score);
-        //
     }
 
     public function store(Request $request)
@@ -141,9 +71,9 @@ class CustomerController extends Controller
             $data->status = 0;
             $data->FAEID = $request->FAEID;
             $data->SalesID = $request->SalesID;
-            $data->note = $request->note?$request->note:'';
-            $data->order_at = $request->order_at?$request->order_at:null;
-            $data->Maintenance_Agreement_at = $request->Maintenance_Agreement_at?$request->Maintenance_Agreement_at:null;
+            $data->note = $request->note ? $request->note : '';
+            $data->order_at = $request->order_at ? $request->order_at : null;
+            $data->Maintenance_Agreement_at = $request->Maintenance_Agreement_at ? $request->Maintenance_Agreement_at : null;
             //  $data->transfer_at = $request->probetype;
             $result = $data->save();
             return $result;
@@ -180,7 +110,7 @@ class CustomerController extends Controller
                 $customer['FAEID'] = $value->FAEID;
                 $customer['note'] = $value->note;
                 $customer['SalesID'] = $value->SalesID;
-                $customer['Maintenance_Agreement_at'] = $value->Maintenance_Agreement_at?$value->Maintenance_Agreement_at:'尚未成交';
+                $customer['Maintenance_Agreement_at'] = $value->Maintenance_Agreement_at ? $value->Maintenance_Agreement_at : '尚未成交';
                 $result[] = $customer;
             }
             // dd($result);
@@ -193,5 +123,32 @@ class CustomerController extends Controller
             return response()->json([]);
         }
     }
+
+    public function update(Request $request)
+    {
+
+        if ($request->id) {
+
+            // $currentTime = Carbon::now();
+            $customer = customer::find($request->id);
+            if ($customer) {
+                $customer->Organization_Name = $request->Organization_Name;
+                $customer->Organization_Address = $request->Organization_Address;
+                $customer->note = $request->note ? $request->note : '';
+                $customer->contractPerson = $request->contractPerson;
+                $customer->contractPerson_PhoneNumber = $request->contractPerson_PhoneNumber;
+                $customer->contractPerson_Email = $request->contractPerson_Email;
+                $customer->SalesID = $request->SalesID;
+                $customer->FAEID = $request->FAEID;
+        
+                $result = $customer->update();
+            }
+
+            return $result;
+
+        }
+
+    }
+
     //
 }
