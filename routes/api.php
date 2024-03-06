@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\ProbeController;
 use App\Http\Controllers\Api\CustomerController;
 use Illuminate\Http\Request;
@@ -32,6 +33,10 @@ Route::post('/Probe/invisible', [ProbeController::class, 'destroy']);
 
 //** customer **//
 Route::get('/customers/{id?}', [CustomerController::class, 'index']);
-Route::post('/customer', [CustomerController::class, 'store']);
+Route::post('/customers', [CustomerController::class, 'store']);
 Route::get('/customers/detail/{id}', [CustomerController::class, 'detail']);
 Route::post('/customers/update', [CustomerController::class, 'update']);
+
+//** employee **//
+Route::get('/employee/{id?}', [EmployeeController::class, 'index']);
+Route::post('/employee', [EmployeeController::class, 'store']);
