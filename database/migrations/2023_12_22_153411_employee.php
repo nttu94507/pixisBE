@@ -19,7 +19,7 @@ return new class extends Migration
             // $table->id();
             $table->uuid('id');//A.K.A 員編
             $table->string('Name');//名字
-            // $table->string('Address');
+            $table->string('Department');//部門
             // $table->string('Email');
             // $table->string('PhoneNumber');
             // $table->string('contractPerson');//緊急聯絡人

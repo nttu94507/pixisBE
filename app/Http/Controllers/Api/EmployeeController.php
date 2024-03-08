@@ -14,54 +14,48 @@ class EmployeeController extends Controller
 
         if ($id) {
             $score = Employee::select('*')->where('id', '=', $id)->get();
-            // $score = probe::first($id);
         } else {
-            $score = Employee::select('*')->get();
-            // dd($score);   
+            $score = Employee::select('*')->get(); 
         }
+        if ($score) {
+            foreach ($score as $key => $value) {
+                $customer = [];
+                $customer['id'] = $value->id;
+                $customer['name'] = $value->Name;
+                $customer['department'] = $value->Department;
+                $result[] = $customer;
+            }
 
-        return $score;
-        // $result = [];
-
-        // if ($score) {
-        //     foreach ($score as $key => $value) {
-
-        //     }
-
-
-
-        // dd(123);
-    }
-
-
+            if ($result) {
+                return response()->json($result);
+            } else {
+                return response()->json([]);
+            }
+        }
+    } 
     public function store(Request $request)
     {
-        $employee_Name = $request->employee_Name;
         $result = Employee::firstOrnew(['Name' => $request->employee_Name]);
-
         if ($result->exists) {
-            // $score = Employee::select('*')->where('id', '=', $id)->get();
             return 0;
-            // $score = probe::first($id);
         } else {
-            // $score = Employee::select('*')->get();
             $result->Name = $request->employee_Name;
-            // $result->save();
+            $result->Department = $request->department;
             $d = $result->save();
-            // dd($score);  
             return $d; 
         }
-        // $result = [];
-
-        // if ($score) {
-        //     foreach ($score as $key => $value) {
-
-        //     }
-
-
-
-        // dd(123);
     }
-
-    //
+    
+    public function update (Request $request)
+    {
+        $employe = Employee::find($request->id);
+        if ($employe) {
+            $employe->Name = $request->Name;
+            $employe->Department = $request->Department;
+            $employe->note = $request->note;
+            $d = $employe->save();
+            return $d; 
+        }
+    }
 }
+

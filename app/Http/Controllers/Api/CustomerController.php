@@ -77,6 +77,7 @@ class CustomerController extends Controller
             //  $data->transfer_at = $request->probetype;
             $result = $data->save();
             return $result;
+
         }
 
         //

@@ -40,3 +40,4 @@ Route::post('/customers/update', [CustomerController::class, 'update']);
 //** employee **//
 Route::get('/employee/{id?}', [EmployeeController::class, 'index']);
 Route::post('/employee', [EmployeeController::class, 'store']);
+Route::post('/employee/update', [EmployeeController::class, 'update']);
